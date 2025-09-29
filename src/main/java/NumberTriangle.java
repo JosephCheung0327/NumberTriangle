@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * This is the provided NumberTriangle class to be used in this coding task.
@@ -112,22 +113,52 @@ public class NumberTriangle {
 
         // TODO define any variables that you want to use to store things
 
+
+
         // will need to return the top of the NumberTriangle,
         // so might want a variable for that.
         NumberTriangle top = null;
-
         String line = br.readLine();
+        ArrayList<ArrayList<Integer>> nums = new ArrayList<>();
+        ArrayList<ArrayList<NumberTriangle>> triangleRows = new ArrayList<>();
+
         while (line != null) {
 
-            // remove when done; this line is included so running starter code prints the contents of the file
-            System.out.println(line);
-
             // TODO process the line
+//            String num = line.split(" ")[0];
+//            NumberTriangle triangle = new NumberTriangle(Integer.parseInt(num));
+
+            ArrayList<Integer> numsLine = new ArrayList<>();
+            for  (int i = 0; i < line.split(" ").length; i++) {
+              String num = line.split(" ")[i];
+              numsLine.add(Integer.parseInt(num));
+            }
+            nums.add(numsLine);
 
             //read the next line
             line = br.readLine();
         }
         br.close();
+
+        for (ArrayList<Integer> row : nums) {
+          ArrayList<NumberTriangle> triangleRow = new ArrayList<>();
+          for (Integer value : row) {
+            triangleRow.add(new NumberTriangle(value));
+          }
+          triangleRows.add(triangleRow);
+        }
+
+        for (int i = 0; i < triangleRows.size() - 1; i++) {
+          ArrayList<NumberTriangle> row = triangleRows.get(i);
+          ArrayList<NumberTriangle> nextRow = triangleRows.get(i + 1);
+          for (int j = 0; j < row.size(); j++) {
+            row.get(j).setLeft(nextRow.get(j));
+            row.get(j).setRight(nextRow.get(j + 1));
+          }
+        }
+
+        System.out.println(triangleRows);
+        top = triangleRows.get(0).get(0);
         return top;
     }
 
