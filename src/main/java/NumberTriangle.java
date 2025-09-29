@@ -100,13 +100,13 @@ public class NumberTriangle {
           if (direction == 'l') {
             path = path.substring(1);
             current = current.left;
-            retrieve(path);
+            return this.left.retrieve(path);
           }
 
           else {
             path = path.substring(1);
             current = current.right;
-            retrieve(path);
+            return this.right.retrieve(path);
           }
         }
 
